@@ -15,7 +15,7 @@ validate objects (including http request params) against a schema. includes expr
 
 # EXAMPLE USAGE - validate an object
 
-		var schema 	= require("./path/to/schemajs");
+      var schema  = require("./path/to/schemajs");
       var model   = schema.create({
 			name:		{type:"string", filters:"trim", properties:{max:255}, required:true},
          email:   {type:"email", filters:"trim", required:true},
@@ -29,9 +29,9 @@ validate objects (including http request params) against a schema. includes expr
       // form.data   - contains filtered version of the object {name:"your name", email:"name@example.com", wins:0, average:0}
       // form.errors - contains associative array of any errors found
 
-# EXAMPLE USAGE - in expressjs, validate the get parameters
+# EXAMPLE USAGE - in expressjs, validate the request parameters
 
-		var schema 	= require("./path/to/schemajs");
+      var schema  = require("./path/to/schemajs");
       var query   = schema.create({
          wins:    {type:"int", filters:"toInt"},
          query:   {type:"string", filters:"trim", required:true, error:"invalid query"}
@@ -53,8 +53,8 @@ validate objects (including http request params) against a schema. includes expr
 
 ## schema.create(schema)
 
-	// schema for a simple object of one integer value
-	schema =
+   // schema for a simple object of one integer value
+   schema =
 	{
       // [string] value for acceppted parameters of the object you want to test
       "wins":
@@ -79,7 +79,7 @@ validate objects (including http request params) against a schema. includes expr
          // keys can be any property key that was used as well as "filters", "required", "type"
          "error": {max: "too many wins", min: "too few wins", "default": "something is wrong with your wins value"}
       }
-	}
+	};
 
    // schema looking at two complex values (object and an array) with embedded schemas
    schema =
@@ -105,7 +105,7 @@ validate objects (including http request params) against a schema. includes expr
          "properties":  { max: 10, min: 3}
          "error": { max: "too many tags", min: "too few tags" }
       }
-   }
+   };
 	
 ## schema.types
 	
@@ -124,41 +124,47 @@ validate objects (including http request params) against a schema. includes expr
 
 ## schema.filters
 	
-   // built in filters
-   [toInt, toFloat, toString, toDate, toBoolean (converts on/off, true/false, 1/0, yes/no to bools), trim]
+   built in filters:
 
-   // to extend, add a function onto schema.filters that takes in a value and returns the updated value
-   // filters are run BEFORE schema.test is run
-   schema.filters.surround = function(value)
-   {
-      if(value == needs_surrounding)
-         return "----" + value + "----";
-      else
-         return value;
-   }
+      [toInt, toFloat, toString, toDate, toBoolean (converts on/off, true/false, 1/0, yes/no to bools), trim]
+
+   to extend, add a function onto schema.filters that takes in a value and returns the updated value
+
+   filters are run BEFORE schema.test is run
+
+      schema.filters.surround = function(value)
+      {
+         if(value == needs_surrounding)
+            return "----" + value + "----";
+         else
+            return value;
+      }
 
 ## schema.properties
 
-   // built in properties
-   [max, min, regex, in]
+   built in properties
 
-   // to extend, add a function onto schema.properties that takes in a value and any additional arguments
-   // properties are run AFTER test and filters
-   schema.properties.unique = function(value)
-   {
-      if(isArray(value) && allUnique(value))
-         return true;
-      else
-         return false;
-   }
+      [max, min, regex, in]
 
-   schema.properties.notIn = function(value, badwords)
-   {
-      if(badwords.indexOf(value) != -1)
-         return false;
-      else
-         return true;
-   }
+   to extend, add a function onto schema.properties that takes in a value and any additional arguments
+
+   properties are run AFTER test and filters
+
+      schema.properties.unique = function(value)
+      {
+         if(isArray(value) && allUnique(value))
+            return true;
+         else
+            return false;
+      }
+
+      schema.properties.notIn = function(value, badwords)
+      {
+         if(badwords.indexOf(value) != -1)
+            return false;
+         else
+            return true;
+      }
 
 # ideas
 
