@@ -1,7 +1,7 @@
 {
   "name": 			"schemajs",
   "description": 	"extensible object validator",
-  "version": 		"0.1",
+  "version": 		"0.1.1",
   "author": 		"eleith",
   "contributors":	[],
   "repository": 
@@ -9,7 +9,10 @@
     "type": "git",
     "url": "http://github.com/eleith/schemajs.git"
   },
-  "dependencies": {},
-  "engine": 		["node >= 0.3.8"],
+  "dependencies": 
+  {
+    "underscore": ">= 1.1.7"
+  },
+  "engine": 		["node >= 0.4.8"],
   "main": 			"schema"
 }
