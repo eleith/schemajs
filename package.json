@@ -1,7 +1,7 @@
 {
   "name": 			"schemajs",
   "description": 	"extensible object validator",
-  "version": 		"0.1.1",
+  "version": 		"0.1.2",
   "author": 		"eleith",
   "contributors":	[],
   "repository": 
