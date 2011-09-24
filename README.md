@@ -55,67 +55,63 @@ validate objects (including http request params) against a schema. includes expr
 
 schema for a simple object of one integer value
 
-'''javascript
-schema =
-{
-   // [string] value for acceppted parameters of the object you want to test
-   "wins":
+   schema =
    {
-      // [string (built in types) or function (custom types)] the type declaration for accepted values
-      "type": "int",
-
-      // [string (built in filters) or function (custom filters) or array (mix and match!)] 
-      // OPTIONAL, filters to process and optionally modify values
-      "filters": ["trim", "toInt", custom_filter],
-
-      // [anything] 
-      // OPTIONAL, the default value if none is supplied by the object
-      "default": 0,
-
-      // [boolean] 
-      // OPTIONAL, if true, this parameter must exist to validate
-      "required": true
-
-      // [object] 
-      // OPTIONAL, functions are custom property checks, else a built in property will be looked up
-      "properties": {max:100, min:0, special:custom_property}
-
-      // [string, object] OPTIONAL, if there is an error, you can override the message that is returned
-      // use a string or the "default" key to use the default error message
-      // keys can be any property key that was used as well as "filters", "required", "type"
-      "error": {max: "too many wins", min: "too few wins", "default": "something is wrong with your wins value"}
-   }
-};
-```
+      // [string] value for acceppted parameters of the object you want to test
+      "wins":
+      {
+         // [string (built in types) or function (custom types)] the type declaration for accepted values
+         "type": "int",
+   
+         // [string (built in filters) or function (custom filters) or array (mix and match!)] 
+         // OPTIONAL, filters to process and optionally modify values
+         "filters": ["trim", "toInt", custom_filter],
+   
+         // [anything] 
+         // OPTIONAL, the default value if none is supplied by the object
+         "default": 0,
+   
+         // [boolean] 
+         // OPTIONAL, if true, this parameter must exist to validate
+         "required": true
+   
+         // [object] 
+         // OPTIONAL, functions are custom property checks, else a built in property will be looked up
+         "properties": {max:100, min:0, special:custom_property}
+   
+         // [string, object] OPTIONAL, if there is an error, you can override the message that is returned
+         // use a string or the "default" key to use the default error message
+         // keys can be any property key that was used as well as "filters", "required", "type"
+         "error": {max: "too many wins", min: "too few wins", "default": "something is wrong with your wins value"}
+      }
+   };
 
 schema with embedded schemas for object and array types
 
-'''javascript
-schema =
-{
-   "user":
+   schema =
    {
-      "type":  "object",
-      "schema":
+      "user":
       {
-         "name":  { type: "string", properties: { max: 255 }, required: true},
-         "email": { type: "email", error: "email is not a valid email address"}
-      }
-      "error": "user needs an email and a name"
-   },
-
-   "tags":
-   {
-      "type":  "array",
-      "schema":
+         "type":  "object",
+         "schema":
+         {
+            "name":  { type: "string", properties: { max: 255 }, required: true},
+            "email": { type: "email", error: "email is not a valid email address"}
+         }
+         "error": "user needs an email and a name"
+      },
+   
+      "tags":
       {
-         "type": "string"
+         "type":  "array",
+         "schema":
+         {
+            "type": "string"
+         }
+         "properties":  { max: 10, min: 3}
+         "error": { max: "too many tags", min: "too few tags" }
       }
-      "properties":  { max: 10, min: 3}
-      "error": { max: "too many tags", min: "too few tags" }
-   }
-};
-```
+   };
 	
 ## schema.types
 	
@@ -125,15 +121,13 @@ schema =
    to extend, add a function onto schema.types that accepts a value and returns a boolean if the type matches
    test is run AFTER schema.filters are run
 
-   '''javascript
-   schema.types.awesome = function(value)
-   {
-      if(isAwesome(value))
-         return true;
-      else
-         return false;
-   }
-   ```
+      schema.types.awesome = function(value)
+      {
+         if(isAwesome(value))
+            return true;
+         else
+            return false;
+      }
 
 ## schema.filters
 	
@@ -145,16 +139,13 @@ schema =
 
    filters are run BEFORE schema.test is run
 
-   '''javascript
-   schema.filters.surround = function(value)
-   {
-      if(value == needs_surrounding)
-         return "----" + value + "----";
-      else
-         return value;
-   }
-   ```
-
+      schema.filters.surround = function(value)
+      {
+         if(value == needs_surrounding)
+            return "----" + value + "----";
+         else
+            return value;
+      }
 
 
 ## schema.properties
@@ -167,23 +158,21 @@ schema =
 
    properties are run AFTER test and filters
 
-   '''javascript
-   schema.properties.unique = function(value)
-   {
-      if(isArray(value) && allUnique(value))
-         return true;
-      else
-         return false;
-   }
+      schema.properties.unique = function(value)
+      {
+         if(isArray(value) && allUnique(value))
+            return true;
+         else
+            return false;
+      }
 
-   schema.properties.notIn = function(value, badwords)
-   {
-      if(badwords.indexOf(value) != -1)
-         return false;
-      else
-         return true;
-   }
-   ```
+      schema.properties.notIn = function(value, badwords)
+      {
+         if(badwords.indexOf(value) != -1)
+            return false;
+         else
+            return true;
+      }
 
 # ideas
 
