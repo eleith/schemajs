@@ -117,7 +117,7 @@ schema with embedded schemas for object and array types
 	
    built in types 
 
-      [string, alpha, alphanum, email, object, array, date, number, int, boolean, url, zipcode]
+      [string+, string (empty string allowed), alpha, alphanum, email, object, array, date, number, int, boolean, url, zipcode]
 
    to extend, add a function onto schema.types that accepts a value and returns a boolean if the type matches
    test is run AFTER schema.filters are run
