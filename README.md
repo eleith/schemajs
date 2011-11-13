@@ -134,7 +134,7 @@ schema with embedded schemas for object and array types
 	
    built in filters:
 
-      [toInt, toFloat, toString, toDate, toBoolean (converts on/off, true/false, 1/0, yes/no to bools), trim]
+      [toInt, toFloat, toString, toDate, toBoolean (converts on/off, true/false, 1/0, yes/no to bools), trim, lowercase, uppercase]
 
    to extend, add a function onto schema.filters that takes in a value and returns the updated value
 
