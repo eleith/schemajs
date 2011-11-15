@@ -9,10 +9,16 @@
     "type": "git",
     "url": "http://github.com/eleith/schemajs.git"
   },
+  "devDependencies": {
+    "tap": ">= 0.0.13"
+  },
   "dependencies": 
   {
     "underscore": ">= 1.1.7"
   },
   "engine": 		["node >= 0.4.8"],
-  "main": 			"schema"
+  "main": 			"schema",
+  "scripts": {
+    "test" : "tap test/*.js"
+  }
 }
