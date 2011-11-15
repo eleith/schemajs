@@ -1,4 +1,4 @@
-#v0.1.2
+#v0.1.4
 
 ### schemajs
 
@@ -120,6 +120,7 @@ schema with embedded schemas for object and array types
       [string+, string (empty string allowed), alpha, alphanum, email, object, array, date, number, int, boolean, url, zipcode]
 
    to extend, add a function onto schema.types that accepts a value and returns a boolean if the type matches
+
    test is run AFTER schema.filters are run
 
       schema.types.awesome = function(value)
