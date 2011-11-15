@@ -1,6 +1,6 @@
 var schema = require("./lib/schema.js");
 
-Object.keys(schema).forEach(function(export)
+Object.keys(schema).forEach(function(one)
 {
-	exports[export] = schema[export];
+	exports[one] = schema[one];
 });
