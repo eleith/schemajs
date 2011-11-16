@@ -1,6 +1,6 @@
 {
   "name": 			"schemajs",
-  "description": 	"validate objects (including http request params) agains a schema. includes express middleware",
+  "description": 	"validate objects (including http request params) against a schema. includes express middleware",
   "version": 		"0.1.4",
   "author": 		"eleith",
   "contributors":	["andychilton"],
