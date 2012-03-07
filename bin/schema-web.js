@@ -325,7 +325,7 @@
       create:     function(param, rules) { return new Rules(param, rules); },
       types:      is,
       filters:    filters,
-      properties: checks,
+      properties: checks
    };
 
    var Schema = function(schema)
@@ -412,8 +412,9 @@
 
    _.schema =
    {
-      create: function(schema) { return new Schema(schema);},
-      rules:  rules
+      test:    function(value, schema) { return (new Schema({input:schema})).validate({input:value}); },
+      create:  function(schema) { return new Schema(schema);},
+      rules:   rules
    };
 
 })();

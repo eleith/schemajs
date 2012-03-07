@@ -57,6 +57,14 @@ app.get("/users", schema.middleware(query), function(req, res)
 ```
 # API 
 
+## schema.test(schema)
+
+quickly test an individual schema
+
+```javascript
+field = schema.test("email@email.com", {type:"email", trim:true, properties:{min:5}})
+```
+
 ## schema.create(schema)
 
 schema for a simple object of one integer value
