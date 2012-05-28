@@ -10,7 +10,7 @@
     "url": "http://github.com/eleith/schemajs.git"
   },
   "devDependencies": {
-    "mocha": ">= 1.0.3"
+    "mocha": ">= 1.0.3",
     "chai": ">= 1.0.3"
   },
   "dependencies": 
