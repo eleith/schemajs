@@ -10,7 +10,7 @@
     "url": "http://github.com/eleith/schemajs.git"
   },
   "devDependencies": {
-    "tap": ">= 0.0.13"
+    "mocha": ">= 1.0.3"
   },
   "dependencies": 
   {
@@ -19,6 +19,6 @@
   "engine": 		["node >= 0.4.8"],
   "main": 			"schema",
   "scripts": {
-    "test" : "tap test/*.js"
+    "test" : "mocha -R spec test/*.js"
   }
 }
