@@ -1,6 +1,6 @@
 #v0.1.6
 
-### schemajs
+### schemajs [![Build Status](https://secure.travis-ci.org/eleith/schemajs.png)](http://travis-ci.org/eleith/schemajs)
 
 validate objects (including http request params) against a schema. includes express middleware.
 
