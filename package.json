@@ -1,7 +1,7 @@
 {
   "name": 			"schemajs",
   "description": 	"validate objects (including http request params) against a schema. includes express middleware",
-  "version": 		"0.1.6",
+  "version": 		"0.1.7",
   "author": 		"eleith",
   "contributors":	["andychilton"],
   "repository": 
@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "mocha": ">= 1.0.3"
+    "chai": ">= 1.0.3"
   },
   "dependencies": 
   {
