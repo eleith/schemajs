@@ -1,7 +1,7 @@
 describe("schema types", function()
 {
    var schemajs   = require('../schema');
-   var expect       = require('chai').expect;
+   var expect     = require('chai').expect;
    
    it("string", function() 
    {
