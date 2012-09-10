@@ -29,12 +29,14 @@ describe("schema types", function()
       var input1 = schema.validate({input: 'username'});
       var input2 = schema.validate({input: 112390123});
       var input3 = schema.validate({input: ''});
-      var input4 = schema.validate({});
+      var input4 = schema.validate({input: "  "});
+      var input5 = schema.validate({});
    
       expect(input1.valid).to.be.ok;
       expect(!input2.valid).to.be.ok;
       expect(!input3.valid).to.be.ok;
-      expect(input4.valid).to.be.ok;
+      expect(!input4.valid).to.be.ok;
+      expect(input5.valid).to.be.ok;
    });
    
    it("number", function() 

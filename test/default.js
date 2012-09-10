@@ -1,7 +1,7 @@
 describe("default schemas", function()
 {
-   var schemajs   = require('../schema');
-   var expect     = require('chai').expect;
+   var schemajs      = require('../schema');
+   var expect        = require('chai').expect;
 
    it("default values", function()
    {
