@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>schemajs browser tests</title>
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css" type="text/css" charset="utf-8">
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script>mocha.setup('bdd')</script>
+
+  <!-- include required modules -->
+  <script src="../node_modules/underscore/underscore.js"></script>
+  <script src="../dist/schema-browser.js"></script>
+
+  <!-- include individual tests -->
+  <script src="complex.js"></script>
+  <script src="default.js"></script>
+  <script src="error.js"></script>
+  <script src="filters.js"></script>
+  <script src="properties.js"></script>
+  <script src="required.js"></script>
+  <script src="types.js"></script>
+
+</head>
+<body>
+  <div id="mocha"></div>
+  <script type="text/javascript">
+    mocha.run();
+  </script>
+</body>
+</html>

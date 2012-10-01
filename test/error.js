@@ -1,7 +1,8 @@
 describe("schema errors", function()
 {
-   var schemajs   = require('../schema');
-   var expect     = require('chai').expect;
+   /*jshint expr:true*/
+   var schemajs   = (typeof window === 'undefined') ? require('../schema') : window.schema;
+   var expect     = (typeof window === 'undefined') ? require('chai').expect : window.chai.expect;
 
    it("basic error", function()
    {
