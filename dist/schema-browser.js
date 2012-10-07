@@ -400,102 +400,121 @@ window.schema = (function (modules) {
         exports.properties = checks;
       },
       "schema.js": function (exports, module, require) {
-        var rules   = require('./rules.js');
+        var rules = require('./rules.js');
 
-        var Schema = function(schema)
-        {
+        var Schema = function(schema) {
           this.schema = schema;
         };
 
-        Schema.prototype.validate = function(data)
-        {
-          var params  = _.keys(this.schema);
-          var errors  = {};
-          var values  = {};
-           var value;
-           var get     = typeof(data) == "function" ? data : function(p) { return data[p]; };
+        var checkObject = function(schema, key, errors, values, get) {
+          var value;
 
-          for(var i = 0; i < params.length; i++)
-          {
+          _.keys(schema.schema).forEach(function(param) {
+            try {
+
+              // if undefined, don't store it
+              value = rules.create(key + "." + param, schema.schema[param]).apply(get(key)[param]);
+
+              if (!_.isUndefined(value)) {
+                values[key][param] = value;
+              }
+            } catch (error) {
+              if (!errors[key] || typeof(errors[key]) != 'object') errors[key] = {};
+
+              errors[key][param] = error;
+            }
+          });
+        };
+
+        var checkArray = function(schema, key, errors, values, get) {
+          values[key].forEach(function(value, index) {
+            try {
+              if(schema.schema.schema) {
+                // if array has another schema, then we want objects!
+                value = rules.create(key, {type:'object'}).apply(value);
+                var results = (new Schema(schema.schema.schema)).validate(value);
+                if(!results.valid)
+                {
+                  errors[key] = errors[key] || [];
+                  errors[key][index] = results.errors;
+                }
+                values[key][index] = results.data;
+              }
+              else
+                values[key][index] = rules.create(key + "[" + index + "]", schema.schema).apply(value);
+            } catch (error) {
+              if (!_.isArray(errors[key])) errors[key] = [];
+              errors[key][index] = error;
+            }
+          });
+        };
+
+        /*jshint loopfunc:true*/
+
+        Schema.prototype.validate = function(data) {
+          var params = _.keys(this.schema);
+          var errors = {};
+          var values = {};
+          var value;
+          var get = typeof(data) == "function" ? data : function(p) {
+              return data[p];
+            };
+
+          for (var i = 0; i < params.length; i++) {
             var schema = this.schema[params[i]];
 
-            try
-            {
-                 // if undefined, don't store it.
-                 value = rules.create(params[i], schema).apply(get(params[i]));
+            try {
 
-                 if(!_.isUndefined(value)) 
-                 {
-                    values[params[i]] = value;
-                 }
+              // if undefined, don't store it.
+              value = rules.create(params[i], schema).apply(get(params[i]));
+
+              if (!_.isUndefined(value)) {
+                values[params[i]] = value;
+              }
 
               // does this rule contain embedded schemas
-              if(typeof(schema.schema) == "object" && !_.isArray(schema.schema) && _.keys(schema.schema).length && !_.isUndefined(values[params[i]]))
-              {
-                if(schema.type == "object")
-                {
-                  _.keys(schema.schema).forEach(function(param)
-                  {
-                    try
-                    {
-                             // if undefined, don't store it
-                             value = rules.create(params[i] + "." + param, schema.schema[param]).apply(get(params[i])[param]);
+              if (typeof(schema.schema) == "object" && !_.isArray(schema.schema) && _.keys(schema.schema).length && !_.isUndefined(values[params[i]])) {
+                if (schema.type == "object") {
+                  //checkObject(schema, params[i], errors, values, get);
+                  var results = (new Schema(schema.schema)).validate(values[params[i]]);
 
-                             if(!_.isUndefined(value))
-                             {
-                                values[params[i]][param] = value;
-                             }
-                    }
-                    catch(error)
-                    {
-                             if(!errors[params[i]] || typeof(errors[params[i]]) != 'object')
-                                errors[params[i]] = {};
-
-                      errors[params[i]][param] = error;
-                    }
-                  });
-                }
-                else if(schema.type == "array")
-                {
-                  values[params[i]].forEach(function(value, index)
-                  {
-                    try
-                    {
-                             // if not required and undefined, don't store in values!
-                      values[params[i]][index] = rules.create(params[i] + "[" + index + "]", schema.schema).apply(value);
-                    }
-                    catch(error)
-                    {
-                             if(!_.isArray(errors[params[i]]))
-                                errors[params[i]] = [];
-
-                             errors[params[i]][index] = error;
-                    }
-                  });
+                  if(!results.valid)
+                    errors[params[i]] = results.errors;
+                  values[params[i]] = results.data;
+                } else if (schema.type == "array") {
+                  checkArray(schema, params[i], errors, values, get);
                 }
               }
-            }
-            catch(error)
-            {
+            } catch (error) {
               errors[params[i]] = error;
             }
           }
 
-          return {data:values, errors:errors, valid:_.keys(errors).length === 0};
+          return {
+            data: values,
+            errors: errors,
+            valid: _.keys(errors).length === 0
+          };
         };
 
-        exports.types        = rules.types;
-        exports.test         = function(value, schema) { return (new Schema({input:schema})).validate({input:value}); };
-        exports.properties   = rules.properties;
-        exports.filters      = rules.filters;
-        exports.create       = function(schema) { return new Schema(schema); };
-        exports.middleware   = function(schema)
-        {
-           return function(req, res, next)
-           {
-              req.form = new Schema(schema).validate(req.route.method == "post" ? req.body : req.query);
-              next();
-           };
+        exports.types = rules.types;
+        exports.test = function(value, schema) {
+          return (new Schema({
+            input: schema
+          })).validate({
+            input: value
+          });
+        };
+        exports.properties = rules.properties;
+        exports.filters = rules.filters;
+        exports.create = function(schema) {
+          return new Schema(schema);
+        };
+        exports.middleware = function(schema) {
+          return function(req, res, next) {
+            req.form = new Schema(schema).validate(req.route.method == "post" ? req.body : req.query);
+            next();
+          };
         };
       }
     },
@@ -503,5 +522,4 @@ window.schema = (function (modules) {
       module.exports = require("./lib/schema.js");
     }
   }
-})
-("schemajs/schema");
+})("schemajs/schema");
