@@ -25,9 +25,41 @@ describe("complex schemas", function()
    
       expect(!input1.valid).to.be.ok;
       expect(input2.valid).to.be.ok;
-      expect(input2.valid).to.be.ok;
+      expect(!input3.valid).to.be.ok;
       expect(input4.valid).to.be.ok;
    });
+
+   it("arrays and objects", function()
+   {
+      var schema = schemajs.create(
+      {
+          input: 
+          {
+            type:'array',
+            schema:
+            {
+               type: 'object',
+               schema: {
+                  label:{type:"string+"},
+                  num:{type:"number"}
+               }
+            }
+          }
+      });
+      
+      var input1 = schema.validate({input: 'laksjdf'});
+      var input2 = schema.validate({input: [{label:"hi", num:5}, {label:"bye", num:0}]});
+      var input3 = schema.validate({input: [{label:"hi", num:5}, {label:0, num:0}]});
+      var input4 = schema.validate({input: [{label:"hi", num:5}, "oops"]});
+      var input5 = schema.validate({});
+   
+      expect(!input1.valid).to.be.ok;
+      expect(input2.valid).to.be.ok;
+      expect(!input3.valid).to.be.ok;
+      expect(!input4.valid).to.be.ok;
+      expect(input5.valid).to.be.ok;
+   });
+
    
    it("testing complex object type", function()
    {
