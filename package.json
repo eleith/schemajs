@@ -1,9 +1,9 @@
 {
-  "name": 			"schemajs",
-  "description": 	"validate objects (including http request params) against a schema. includes express middleware",
-  "version": 		"0.1.7",
-  "author": 		"eleith",
-  "contributors":	["andychilton"],
+  "name":       "schemajs",
+  "description":   "validate objects (including http request params) against a schema. includes express middleware",
+  "version":     "0.1.8",
+  "author":     "eleith",
+  "contributors":  ["andychilton"],
   "repository": 
   {
     "type": "git",
@@ -17,8 +17,8 @@
   {
     "underscore": ">= 1.1.7"
   },
-  "engine": 		["node >= 0.4.8"],
-  "main": 			"schema",
+  "engine":     ["node >= 0.4.8"],
+  "main":       "schema",
   "scripts": {
     "test" : "mocha -R spec test/*.js"
   }

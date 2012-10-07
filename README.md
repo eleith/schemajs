@@ -1,4 +1,4 @@
-#v0.1.7
+#v0.1.8
 
 ### schemajs [![Build Status](https://secure.travis-ci.org/eleith/schemajs.png)](http://travis-ci.org/eleith/schemajs)
 
