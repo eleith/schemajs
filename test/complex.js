@@ -53,6 +53,7 @@ describe("complex schemas", function()
       var input4 = schema.validate({input: [{label:"hi", num:5}, "oops"]});
       var input5 = schema.validate({});
    
+
       expect(!input1.valid).to.be.ok;
       expect(input2.valid).to.be.ok;
       expect(!input3.valid).to.be.ok;
