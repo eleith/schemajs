@@ -1,4 +1,4 @@
-#v0.1.8
+#v0.1.9
 
 ### schemajs [![Build Status](https://secure.travis-ci.org/eleith/schemajs.png)](http://travis-ci.org/eleith/schemajs)
 
@@ -89,7 +89,11 @@ schema =
     // [boolean] 
     // OPTIONAL, if true, this parameter must exist to validate
     "required": true
-      
+
+    // [boolean] 
+    // OPTIONAL, if true, this parameter can be null, despite any other rules
+    "allownull": true
+ 
     // [object] 
     // OPTIONAL, functions are custom property checks, else a built in property will be looked up
     "properties": {max:100, min:0, special:custom_property}
