@@ -125,9 +125,12 @@ window.schema = (function (modules) {
               throw this.Error("%p is a required parameter", "required", value);
             }
           }
-           // if value is not required and is undefined, no more rules need to be run
-           else if(_.isUndefined(value))
-              return value;
+
+          // if null is allowed, then no more rules need to be run
+          if(this.rules.allownull && _.isNull(value)) return value;
+
+          // if value is not required and is undefined, no more rules need to be run
+          if(_.isUndefined(value)) return value;
 
           if(this.rules.filters)
           {
