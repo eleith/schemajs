@@ -353,12 +353,14 @@ window.schema = (function (modules) {
         {
           'toInt': function(value)
           {
-            return parseInt(value, 10);
+            var num = parseInt(value, 10);
+            return _.isNaN(num) ? null : num;
           },
 
           'toFloat': function(value)
           {
-            return parseFloat(value, 10);
+            var num = parseFloat(value, 10);
+            return _.isNaN(num) ? null : num;
           },
 
           'toString': function(value)
