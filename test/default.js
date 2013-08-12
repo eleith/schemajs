@@ -17,4 +17,16 @@ describe("default schemas", function()
       expect(input1.data.sound).to.equal("meow");
       expect(input2.data.sound).to.equal("mooo");
    });
+
+   it('should execute a function supplied for default', function () {
+     var schema = schemajs.create({
+       sound: { type: 'string', 'default': function () { return 'moo moo'; } }
+     });
+
+     var input1 = schema.validate({ sound: 'meow' });
+     var input2 = schema.validate({});
+
+     expect(input1.data.sound).to.equal('meow');
+     expect(input2.data.sound).to.equal('moo moo');
+   });
 });
