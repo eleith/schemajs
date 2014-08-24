@@ -14,6 +14,7 @@ validate objects (including http request params) against a schema. includes expr
  - properties, types and filters are extensible
 
 # EXAMPLE USAGE - validate an object
+
 ```javascript
 var schema  = require("./path/to/schemajs");
 var model   = schema.create(
