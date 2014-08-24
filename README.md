@@ -62,7 +62,7 @@ app.get("/users", schema.middleware(query), function(req, res)
 quickly test an individual schema
 
 ```javascript
-field = schema.test("email@email.com", {type:"email", trim:true, properties:{min:5}})
+field = schema.test("email@email.com", {type:"email", trim:true, properties:{min:5}});
 ```
 
 ## schema.create(schema)
@@ -88,15 +88,15 @@ schema =
       
     // [boolean] 
     // OPTIONAL, if true, this parameter must exist to validate
-    "required": true
+    "required": true,
 
     // [boolean] 
     // OPTIONAL, if true, this parameter can be null, despite any other rules
-    "allownull": true
+    "allownull": true,
  
     // [object] 
     // OPTIONAL, functions are custom property checks, else a built in property will be looked up
-    "properties": {max:100, min:0, special:custom_property}
+    "properties": {max:100, min:0, special:custom_property},
       
     // [string, object] OPTIONAL, if there is an error, you can override the message that is returned
     // use a string or the "default" key to use the default error message
@@ -118,7 +118,7 @@ schema =
     {
       "name":  { type: "string", properties: { max: 255 }, required: true},
       "email": { type: "email", error: "email is not a valid email address"}
-    }
+    },
     "error": "user needs an email and a name"
   },
       
@@ -128,8 +128,8 @@ schema =
     "schema":
     {
       "type": "string"
-    }
-    "properties":  { max: 10, min: 3}
+    },
+    "properties":  { max: 10, min: 3},
     "error": { max: "too many tags", min: "too few tags" }
   }
 };
