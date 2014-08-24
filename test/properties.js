@@ -3,7 +3,7 @@ describe("filter schemas", function()
    /*jshint expr:true*/
    var schemajs   = (typeof window === 'undefined') ? require('../schema') : window.schema;
    var expect     = (typeof window === 'undefined') ? require('chai').expect : window.chai.expect;
-  
+   
    it("minimum string length property", function()
    {
       var schema = schemajs.create(
@@ -68,7 +68,51 @@ describe("filter schemas", function()
       expect(!fruit2.valid).to.be.ok;
       expect(fruit3.valid).to.be.ok;
    });
-   
+  
+   it("testing nested properties", function()
+   {
+      var schema = schemajs.create({
+         alphabet: {
+            'type':"array",
+            'properties':{'min':1,'max':3},
+            'required':true,
+            schema: {
+               'type':"string",
+               'properties':{'min':1, 'max':3}, 
+               'required':true
+            }
+         }
+      });
+      
+      var abc1 = schema.validate({alphabet:["a","b","c"]});
+      var abc2 = schema.validate({alphabet:["aaaaa","bbbbbb","ccccc"]});
+
+      //test validation
+      expect(abc1.valid).to.be.ok;
+      expect(abc2.valid).to.be.false;
+      //test data
+      expect(abc1.data).to.deep.equal({alphabet:["a","b","c"]});
+      //if false valid, should not be any data
+      expect(Object.keys(abc2.data).length).to.equal(0); 
+
+
+      var schema = schemajs.create({
+         work: {
+            'type':'string',
+            'properties':{'min':1,'max':10}
+         }
+      });
+
+      var job = schema.validate({work:"engineer"});
+      var job2 = schema.validate({work:""});
+
+      expect(job.valid).to.be.ok;
+      expect(job.data).to.be.ok;
+
+      expect(job2.valid).to.be.false;
+      expect(Object.keys(job2.data).length).to.equal(0);
+   });
+
    it("testing custom property", function()
    {
       schemajs.properties.notIn = function(value, list)
