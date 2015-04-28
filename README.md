@@ -30,6 +30,9 @@ var form = model.validate({name:" your name ", email:" name@example.com "});
 // form.errors - contains associative array of any errors found
 ```
 
+If you pass `{strict: true}` as additional arguments into `Schema#validate`, the validation will fail if there are additional keys in the object which are not defined in the schema.
+
+
 # EXAMPLE USAGE - in expressjs, validate the request parameters
 ```javascript
 var schema  = require("./path/to/schemajs");
@@ -203,7 +206,6 @@ schema.properties.notIn = function(value, badwords)
 # ideas
 
    - make it work in the browser for client side validation
-   - strict mode, dissallowing extra parameters from being passed in
    - dependency property making one parameters existance depend on another
    - more types (phone numbers, credit card, ip address)
    - more filters (camelcase, encode/unencode)
