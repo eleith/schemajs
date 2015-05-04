@@ -3,6 +3,7 @@ describe("bugs", function() {
    var schemajs   = (typeof window === 'undefined') ? require('../schema') : window.schema;
    var expect     = (typeof window === 'undefined') ? require('chai').expect : window.chai.expect;
 
+   // <https://github.com/eleith/schemajs/pull/13>
    it("Dates defaulting when not empty (#13)", function() {
       var date1 = new Date;
       var date2 = new Date(1985, 12);
