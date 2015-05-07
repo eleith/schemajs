@@ -15,18 +15,6 @@ describe("strict schemas", function()
       expect(input.errors.type).to.equal("Additional key not defined in schema");
    });
 
-   it("additional keys, strict via schema object", function()
-   {
-      var schema = schemajs.create({
-        strict: true,
-        sound: {type:'string', 'default':'mooo'}
-      });
-
-      var input = schema.validate({sound: 'meow', type: "cat"});
-      expect(input.valid).to.equal(false);
-      expect(input.errors.type).to.equal("Additional key not defined in schema");
-   });
-
    it("additional keys non strict", function()
    {
       var schema = schemajs.create({
