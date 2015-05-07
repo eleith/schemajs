@@ -203,9 +203,13 @@ schema.properties.notIn = function(value, badwords)
 }
 ```
 
+
+## Browser usage
+You can use it in the browser by using [browserify](http://browserify.org/), however if that's too much work just use <https://wzrd.in/>. There is also an example <examples/cdn.html>
+
+
 # ideas
 
-   - make it work in the browser for client side validation
    - dependency property making one parameters existance depend on another
    - more types (phone numbers, credit card, ip address)
    - more filters (camelcase, encode/unencode)
