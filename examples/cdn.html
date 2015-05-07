@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>https://wzrd.in - schemajs example</title>
+  </head>
+  <body>
+    <p>See the console and view the source for details</p>
+
+    <script type="text/javascript" src="https://wzrd.in/standalone/schemajs@latest"></script>
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // Example from the README
+        // NOTE: You'll have to use `window.schemajs`
+        var model = window.schemajs.create(
+        {
+          name:    {type:"string", filters:"trim", properties:{max:255}, required:true},
+          email:   {type:"email", filters:"trim", required:true},
+          wins:    {type:"int", filters:["trim", "toInt"], default:0},
+          average: {type:"float", filters:["trim", "toFloat"], default:0}
+        });
+
+        var form = model.validate({name:" your name ", email:" name@example.com "});
+        console.log(form);
+      });
+
+    </script>
+  </body>
+</html>
+
