@@ -39,4 +39,27 @@ describe("schema errors", function()
       expect(!input3.valid).to.be.ok;
       expect(input3.errors.sound).to.equal('sound is missing');
    });
+
+   it("'in' property errors", function()
+   {
+      var schema = schemajs.create(
+      {
+          sound: {
+            type:"string",
+            properties:{
+              in: ["meow", "purr"]
+            }
+          }
+      });
+
+      var input1 = schema.validate({sound: 'meow'});
+      var input2 = schema.validate({sound: 'purr'});
+      var input3 = schema.validate({sound: 'bark'});
+
+      expect(input1.data.sound).to.equal('meow');
+      expect(input1.valid).to.be.ok;
+      expect(input2.data.sound).to.equal('purr');
+      expect(input2.valid).to.be.ok;
+      expect(input3.errors.sound).to.equal("'sound' failed 'in' with 'bark' not one of [meow, purr]");
+   });
 });
