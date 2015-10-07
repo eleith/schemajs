@@ -13,7 +13,7 @@ describe("required schemas", function()
       });
       var input1 = schema.validate({input: 'username'});
       var input2 = schema.validate({});
-   
+
       expect(input1.valid).to.be.ok;
       expect(!input2.valid).to.be.ok;
    });
@@ -29,9 +29,11 @@ describe("required schemas", function()
       var input1 = schema.validate({input: 'username'});
       var input2 = schema.validate({});
       var input3 = schema.validate({input:null, output:"hi there"});
-  
+
       expect(input1.valid).to.be.ok;
+      expect(input1.data.input).to.equal('username');
       expect(!input2.valid).to.be.ok;
       expect(input3.valid).to.be.ok;
+      expect(input3.data.input).to.equal(null);
    });
 });
